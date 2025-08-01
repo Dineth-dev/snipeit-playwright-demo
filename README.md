@@ -26,12 +26,12 @@ https://github.com/Dineth-dev/snipeit-playwright-demo.git
 cd snipeit-playwright-demo
 cd SnipeitPlaywrightDemo
 
-## 2. Restore .NET dependencies
+## 3. Restore .NET dependencies
 dotnet restore
 
-## 3. Install Playwright browsers
+## 4. Install Playwright browsers
 dotnet playwright install
 
-## 4. Run tests
+## 5. Run tests
 dotnet test
 
