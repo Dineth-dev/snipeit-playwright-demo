@@ -33,7 +33,8 @@ This project depends on:
 ## 4. Install Playwright browsers
 `pwsh bin/Debug/net9.0/playwright.ps1 install` <br>
             or <br>
-`powershell -ExecutionPolicy Bypass -File bin\Debug\net9.0\playwright.ps1 install`
+`powershell -ExecutionPolicy Bypass -File bin\Debug\net9.0\playwright.ps1 install` <br>
+If file is not found, run `dotnet test`, before running above commands
 
 
 ## 5. Run tests
