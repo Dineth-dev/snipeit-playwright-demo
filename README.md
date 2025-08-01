@@ -20,18 +20,22 @@ This project depends on:
 
 # Setup Commands to Run
 ## 1. Clone the repo
-https://github.com/Dineth-dev/snipeit-playwright-demo.git
+`git clone https://github.com/Dineth-dev/snipeit-playwright-demo.git`
 
 ## 2. Change to .NET project
-cd snipeit-playwright-demo
-cd SnipeitPlaywrightDemo
+`cd snipeit-playwright-demo`
+        followed by
+`cd SnipeitPlaywrightDemo`
 
 ## 3. Restore .NET dependencies
-dotnet restore
+`dotnet restore`
 
 ## 4. Install Playwright browsers
-dotnet playwright install
+`pwsh bin/Debug/net9.0/playwright.ps1 install`
+            or
+`powershell -ExecutionPolicy Bypass -File bin\Debug\net9.0\playwright.ps1 install`
+
 
 ## 5. Run tests
-dotnet test
+`dotnet test`
 
