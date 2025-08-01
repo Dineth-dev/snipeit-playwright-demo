@@ -1,4 +1,6 @@
 using Microsoft.Playwright;
+using NUnit.Framework;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Threading.Tasks;
 
 public class AssetPage
@@ -12,16 +14,24 @@ public class AssetPage
 
     public async Task GoToAssetPage()
     {
+        await _page.WaitForSelectorAsync("h1:has-text(\"Dashboard\")");
         await _page.Locator("div.dashboard.small-box.bg-teal div.inner p:has-text(\"Assets\")").ClickAsync();
         await _page.WaitForSelectorAsync("div.th-inner.sortable.both.asc:has-text(\"Asset Name\")");
     }
 
-    public async Task CreateNewAssetWithInformation(string modelName, string status)
+    public async Task FindAsset(string assetTag)
+    {
+        await _page.FillAsync("input.form-control.search-input", assetTag);
+        await _page.Keyboard.PressAsync("Enter");
+    }
+
+    public async Task<string> CreateNewAssetWithInformation(string modelName, string status)
     {
         await _page.ClickAsync("a.dropdown-toggle:has-text(\"Create New\")");
         await _page.WaitForSelectorAsync("ul.dropdown-menu li a:has-text(\"Asset\")");
         await _page.ClickAsync("ul.dropdown-menu li a:has-text(\"Asset\")");
         await _page.WaitForSelectorAsync("li.breadcrumb-item.active:has-text(\"Create New\")");
+        var assetTag = await _page.Locator("input#asset_tag").GetAttributeAsync("value");
         await _page.WaitForSelectorAsync("span.select2-selection__placeholder.needsclick:has-text(\"Select a Model\")");
         await _page.ClickAsync("span.select2-selection__placeholder.needsclick:has-text(\"Select a Model\")");
         await _page.FillAsync("input.select2-search__field", modelName);
@@ -33,8 +43,47 @@ public class AssetPage
         await _page.ClickAsync("span#select2-assigned_user_select-container:has-text(\"Select a User\")");
         await _page.WaitForSelectorAsync("ul[role='listbox'] >> li");
         await _page.ClickAsync("ul[role='listbox'] >> li >> nth=0");
-        await _page.ClickAsync("button[type='submit']");
-    }       
+        await _page.ClickAsync("button[type='submit']:has-text(\"Save\")");
+        return assetTag ?? string.Empty;
+    }
+    public async Task GoToAssetDetails(string assetTag)
+    {
+        await _page.ClickAsync($"mark:has-text(\"{assetTag}\")");
+    }
+
+    public async Task<string> GetAssetDetails()
+    {
+        string assetTagDetails = await _page.Locator("span.js-copy-assettag").InnerTextAsync();
+        return assetTagDetails;
+    }
+
+    public async Task GotoAssetHistory()
+    {
+        await _page.ClickAsync("a[href='#history']");
+    }
+
+    public async Task RedirectToHomePage()
+    {
+        await _page.ClickAsync("img.navbar-brand-img");
+    }
+    
+    public async Task checkIfAssetDetailsAreInTable(string assetTag, string modelName)
+    {
+        await _page.WaitForSelectorAsync("table#assetHistory");
+        await Task.Delay(5000);
+        var table = _page.Locator("table#assetHistory");
+        var rows = table.Locator("tbody tr");
+        var rowMatchingAssetTag = rows.Filter(new LocatorFilterOptions
+        {
+            HasText = assetTag
+        });
+        var rowMatchingModelName = rows.Filter(new LocatorFilterOptions
+        {
+            HasText = modelName
+        });
+        Assert.That(await rowMatchingAssetTag.CountAsync(), Is.GreaterThanOrEqualTo(1));
+        Assert.That(await rowMatchingAssetTag.CountAsync(), Is.GreaterThanOrEqualTo(1));
+    }   
     
 
 }
