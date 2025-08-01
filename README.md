@@ -1,4 +1,4 @@
-# playwright-demo-tests
+# Playwright .NET Automation for Snipe-IT Demo
 This Playwright test project demonstrates browser automation testing the Snipe-IT demo site. The automated script performs the following steps:
 - Login to the snipeit demo at https://demo.snipeitapp.com/login
 - Create a new Macbook Pro 13" asset with the ready to deploy status and checked out to a random user
