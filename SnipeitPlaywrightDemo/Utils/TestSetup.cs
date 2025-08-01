@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 
 public class TestSetup
 {
-    protected IPlaywright playwright;
-    protected IBrowser browser;
-    protected IBrowserContext context;
-    protected IPage page;
+    protected IPlaywright playwright = null!;
+    protected IBrowser browser = null! ;
+    protected IBrowserContext context = null!;
+    protected IPage page = null!;
 
     [SetUp]
     public async Task Setup()

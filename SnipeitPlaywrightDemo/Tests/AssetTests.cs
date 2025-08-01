@@ -38,7 +38,7 @@ public class AssetTests : TestSetup
         await page.WaitForSelectorAsync("span.hidden-xs.hidden-sm:has-text(\"History\")");
         string assetTagDetails = await assetPage.GetAssetDetails();
         Assert.That(assetTagDetails, Is.EqualTo(assetTag), "Assert Tag is not on Asset Details Page");
-        var link = await page.WaitForSelectorAsync($"a:text(\"{modelName}\")");
+        var link= await page.WaitForSelectorAsync($"a:text(\"{modelName}\")");
         Assert.That(await link.IsVisibleAsync(), Is.True, "Assert Model Name is not on Asset Details Page");
         await assetPage.GotoAssetHistory();
         await assetPage.checkIfAssetDetailsAreInTable(assetTag, modelName);
