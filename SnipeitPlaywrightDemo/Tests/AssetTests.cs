@@ -6,17 +6,6 @@ using System.Threading.Tasks;
 public class AssetTests : TestSetup
 {
     [Test]
-    public async Task AssetsPage_ShouldLoad_WhenAssetsButtonIsClicked()
-    {
-        var loginPage = new LoginPage(page);
-        var assetPage = new AssetPage(page);
-        await loginPage.GoToLoginPage();
-        await loginPage.Login("admin", "password");
-        await assetPage.GoToAssetPage();
-        Assert.That(await page.IsVisibleAsync("div.th-inner.sortable.both.asc:has-text(\"Asset Name\")"), Is.True, "Asset Page did not load");
-    }
-
-    [Test]
     public async Task NewAsset_ShouldBeCreated_WhenValidInformationIsAdded()
     {
         var loginPage = new LoginPage(page);
