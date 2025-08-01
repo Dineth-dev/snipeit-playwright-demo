@@ -34,7 +34,7 @@ This project depends on:
 `pwsh bin/Debug/net9.0/playwright.ps1 install` <br>
             or <br>
 `powershell -ExecutionPolicy Bypass -File bin\Debug\net9.0\playwright.ps1 install` <br>
-If file is not found, run `dotnet test`, before running above commands
+If file is not found, run `dotnet test`, and rerun command
 
 
 ## 5. Run tests
