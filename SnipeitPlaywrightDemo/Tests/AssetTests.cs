@@ -35,10 +35,10 @@ public class AssetTests : TestSetup
         var userName = await page.WaitForSelectorAsync($"a:text(\"{parsedUsername}\")");
         Assert.That(await userName.IsVisibleAsync(), Is.True, "Asset Username is not on Asset Details Page");
         await assetPage.GotoAssetHistory();
-        (ILocator rowMatchingAssetTag, ILocator rowMatchingModelName, string userNameListed) =  await assetPage.checkIfAssetDetailsAreInTable(assetTag, modelName);
+        (ILocator rowMatchingAssetTag, ILocator rowMatchingModelName, string userNameListed) =  await assetPage.getAssetHistoryDetails(assetTag, modelName);
         Assert.That(parsedUsername, Is.EqualTo(userNameListed.Trim()));
-        Assert.That(await rowMatchingAssetTag.CountAsync(), Is.GreaterThanOrEqualTo(1));
-        Assert.That(await rowMatchingModelName.CountAsync(), Is.GreaterThanOrEqualTo(1));
+        Assert.That(await rowMatchingAssetTag.CountAsync(), Is.GreaterThanOrEqualTo(1)); // Ensures Asset Tag is listed in table 
+        Assert.That(await rowMatchingModelName.CountAsync(), Is.GreaterThanOrEqualTo(1)); // Ensures Model Name is listed in table
     }
 
 }

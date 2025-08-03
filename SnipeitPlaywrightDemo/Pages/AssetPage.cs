@@ -68,7 +68,7 @@ public class AssetPage
         await _page.ClickAsync("img.navbar-brand-img");
     }
 
-    public async Task <(ILocator  rowMatchingAssetTag, ILocator  rowMatchingModelName, string userNameListed)> checkIfAssetDetailsAreInTable(string assetTag, string modelName)
+    public async Task <(ILocator  rowMatchingAssetTag, ILocator  rowMatchingModelName, string userNameListed)> getAssetHistoryDetails(string assetTag, string modelName)
     {
         await _page.WaitForSelectorAsync("table#assetHistory");
         await Task.Delay(5000);
