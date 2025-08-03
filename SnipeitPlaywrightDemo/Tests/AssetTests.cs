@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 [TestFixture]
 public class AssetTests : TestSetup
 {
+    // Logs in, creates an asset, finds and verifies that asset tag, model name, and username are consistent on the asset info and history pages.
     [Test]
     public async Task NewAsset_ShouldBeCreated_WhenValidInformationIsAdded()
     {

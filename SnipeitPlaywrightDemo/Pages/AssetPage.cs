@@ -86,7 +86,7 @@ public class AssetPage
         return (rowMatchingAssetTag, rowMatchingModelName, userNameListed);
     }
 
-    public string CleanUserDetails(string user)
+    public string ParseUsername(string user)
     {
         var userDetails = user.Split(',');
         var firstNamePart = userDetails[1].Split('(');
