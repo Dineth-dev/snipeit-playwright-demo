@@ -25,7 +25,7 @@ public class AssetPage
         await _page.Keyboard.PressAsync("Enter");
     }
 
-    public async Task<string> CreateNewAssetWithInformation(string modelName, string status)
+    public async Task<(string assetTag, string user)> CreateNewAssetWithInformation(string modelName, string status)
     {
         await _page.ClickAsync("a.dropdown-toggle:has-text(\"Create New\")");
         await _page.WaitForSelectorAsync("ul.dropdown-menu li a:has-text(\"Asset\")");
@@ -43,8 +43,9 @@ public class AssetPage
         await _page.ClickAsync("span#select2-assigned_user_select-container:has-text(\"Select a User\")");
         await _page.WaitForSelectorAsync("ul[role='listbox'] >> li");
         await _page.ClickAsync("ul[role='listbox'] >> li >> nth=0");
+        var user = await _page.Locator("span#select2-assigned_user_select-container").GetAttributeAsync("title");
         await _page.ClickAsync("button[type='submit']:has-text(\"Save\")");
-        return assetTag ?? string.Empty;
+        return (assetTag ?? string.Empty, user ?? string.Empty);
     }
     public async Task GoToAssetDetails(string assetTag)
     {
@@ -66,8 +67,8 @@ public class AssetPage
     {
         await _page.ClickAsync("img.navbar-brand-img");
     }
-    
-    public async Task checkIfAssetDetailsAreInTable(string assetTag, string modelName)
+
+    public async Task <(ILocator  rowMatchingAssetTag, ILocator  rowMatchingModelName, string userNameListed)> checkIfAssetDetailsAreInTable(string assetTag, string modelName)
     {
         await _page.WaitForSelectorAsync("table#assetHistory");
         await Task.Delay(5000);
@@ -81,9 +82,17 @@ public class AssetPage
         {
             HasText = modelName
         });
-        Assert.That(await rowMatchingAssetTag.CountAsync(), Is.GreaterThanOrEqualTo(1));
-        Assert.That(await rowMatchingModelName.CountAsync(), Is.GreaterThanOrEqualTo(1));
-    }   
-    
+        string userNameListed = await _page.Locator("a[data-original-title='user']").InnerTextAsync();
+        return (rowMatchingAssetTag, rowMatchingModelName, userNameListed);
+    }
 
+    public string CleanUserDetails(string user)
+    {
+        var userDetails = user.Split(',');
+        var firstNamePart = userDetails[1].Split('(');
+        string firstName = firstNamePart[0].Trim();
+        string lastName = userDetails[0].Trim();
+        user = lastName + ' ' + firstName;
+        return user;
+    }
 }
