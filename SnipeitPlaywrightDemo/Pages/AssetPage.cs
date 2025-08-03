@@ -82,7 +82,7 @@ public class AssetPage
             HasText = modelName
         });
         Assert.That(await rowMatchingAssetTag.CountAsync(), Is.GreaterThanOrEqualTo(1));
-        Assert.That(await rowMatchingAssetTag.CountAsync(), Is.GreaterThanOrEqualTo(1));
+        Assert.That(await rowMatchingModelName.CountAsync(), Is.GreaterThanOrEqualTo(1));
     }   
     
 
