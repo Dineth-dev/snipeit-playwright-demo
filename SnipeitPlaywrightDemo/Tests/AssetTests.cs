@@ -31,7 +31,7 @@ public class AssetTests : TestSetup
         Assert.That(assetTagDetails, Is.EqualTo(assetTag), "Asset Tag is not on Asset Details Page");
         var link = await page.WaitForSelectorAsync($"a:text(\"{modelName}\")");
         Assert.That(await link.IsVisibleAsync(), Is.True, "Asset Model Name is not on Asset Details Page");
-        string parsedUsername = assetPage.CleanUserDetails(user);
+        string parsedUsername = assetPage.ParseUsername(user);
         var userName = await page.WaitForSelectorAsync($"a:text(\"{parsedUsername}\")");
         Assert.That(await userName.IsVisibleAsync(), Is.True, "Asset Username is not on Asset Details Page");
         await assetPage.GotoAssetHistory();
